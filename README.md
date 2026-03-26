@@ -57,9 +57,7 @@ The app calls the Anthropic API (`/api/oauth/usage`) — the same endpoint Claud
 
 ```bash
 pkill ClaudeMonitor
-rm -rf /Applications/ClaudeMonitor.app
-
-# Optional: clear the cache
+rm -rf /Applications/ClaudeMonitor.app &&
 rm -f ~/.cache/claude-api-response.json \
       ~/.cache/claude-usage-backoff \
       ~/.cache/claude-usage.lock

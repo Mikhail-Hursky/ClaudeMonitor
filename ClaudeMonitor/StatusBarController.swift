@@ -60,9 +60,10 @@ final class StatusBarController: NSObject {
     // MARK: - Actions
 
     @objc private func forceRefresh() {
-        let f = FileManager.default.homeDirectoryForCurrentUser
-            .appendingPathComponent(".cache/claude-api-response.json")
-        try? FileManager.default.removeItem(at: f)
+        let base = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent(".cache")
+        try? FileManager.default.removeItem(at: base.appendingPathComponent("claude-api-response.json"))
+        try? FileManager.default.removeItem(at: base.appendingPathComponent("claude-usage-backoff"))
+        try? FileManager.default.removeItem(at: base.appendingPathComponent("claude-usage.lock"))
         refresh()
     }
 
@@ -76,14 +77,14 @@ final class StatusBarController: NSObject {
 
     private func apply(_ json: [String: Any]?) {
         guard let json else {
-            render(line1: "?", line2: "claude", pct5: nil, pct7: nil)
+            render(line1: "Not work", line2: "claude", pct5: nil, pct7: nil)
             return
         }
         let u  = parseUsage(json)
         let p5 = u.fiveHourPct
         let p7 = u.sevenDayPct
-        let t5 = u.fiveHourResetsAt.map(timeLeft) ?? "?"
-        let t7 = u.sevenDayResetsAt.map(timeLeft) ?? "?"
+        let t5 = u.fiveHourResetsAt.map(timeLeft) ?? "--:--"
+        let t7 = u.sevenDayResetsAt.map(timeLeft) ?? "--:--"
 
         render(
             line1: p5.map { "5h \(Int($0))%  \(t5)" } ?? "5h  —",

@@ -138,13 +138,13 @@ func timeLeft(_ iso: String) -> String {
         fmt.formatOptions = [.withInternetDateTime]
         date = fmt.date(from: iso)
     }
-    guard let date else { return "?" }
+    guard let date else { return "--:--" }
     let secs = Int(date.timeIntervalSinceNow)
     guard secs > 0 else { return "~0м" }
     let d = secs / 86400
     let h = (secs % 86400) / 3600
     let m = (secs % 3600) / 60
     if d > 0 { return "\(d)д\(h)ч" }
-    if h > 0 { return "\(h)ч\(m)м" }
+    if h > 0 { return "\(h):\(m)ч" }
     return "\(m)м"
 }
