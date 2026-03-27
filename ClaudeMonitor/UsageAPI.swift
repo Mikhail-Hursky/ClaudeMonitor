@@ -145,6 +145,6 @@ func timeLeft(_ iso: String) -> String {
     let h = (secs % 86400) / 3600
     let m = (secs % 3600) / 60
     if d > 0 { return "\(d)д\(h)ч" }
-    if h > 0 { return "\(h):\(m)ч" }
+    if h > 0 { return String(format: "%02d:%02d Ч", h, m) }
     return "\(m)м"
 }
