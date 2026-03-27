@@ -25,7 +25,7 @@ final class StatusBarController: NSObject {
     override init() {
         super.init()
         buildMenu()
-        render(line1: "⏳", line2: "", pct5: nil, pct7: nil)
+        render(line1: "Loading...", line2: "", pct5: nil, pct7: nil)
         refresh()
         Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { [weak self] _ in
             self?.refresh()
